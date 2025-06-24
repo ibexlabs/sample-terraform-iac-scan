@@ -38,7 +38,15 @@ jobs:
       run: tflint --init
 
     - name: Run TFLint
-      run: tflint -f sarif
+      run: tflint -f sarif > tflint-results.sarif
+
+    - name: Upload all scan results as a SARIF zip package
+      if: always()
+      uses: actions/upload-artifact@v4.6.2
+      with:
+        name: tflint-scan-results
+        path: ./*.sarif
+        retention-days: 30
 
   trivy:
     name: trivy
@@ -63,6 +71,6 @@ jobs:
       if: always()
       uses: actions/upload-artifact@v4.6.2
       with:
-        name: iac-scan-results
+        name: trivy-scan-results
         path: ./*.sarif
         retention-days: 30
