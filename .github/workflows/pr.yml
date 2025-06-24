@@ -34,7 +34,7 @@ jobs:
       run: tflint --init
 
     - name: Run TFLint
-      run: tflint -f sarif
+      run: tflint -f sarif > tflint-results.sarif
 
   tfsec:
     name: tfsec PR commenter
